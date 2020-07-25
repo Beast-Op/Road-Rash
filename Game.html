@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link href="Game.css" rel="stylesheet">
+	<title></title>
+</head>
+<body>
+	<div class="carGame">
+		<div class="score">
+			</div>
+			<div class="start">
+				<p> Press Any Key To Start Game <br>
+					Arrow Keys To Move <br>
+				If You Hit Another Car You Will Lose </p>
+			</div>
+			<div class="gamearea ">
+		
+			</div>
+	
+	</div>
+			<div class="level">level 1</div>
+<script type="text/javascript">
+
+	const score = document.querySelector('.score');
+	const startScreen = document.querySelector('.start');
+	const gameArea = document.querySelector('.gamearea');
+	document.addEventListener('keydown', keyDown);
+	document.addEventListener('keyup', keyUp);
+	let keys = {ArrowUp: false, ArrowDown : false, ArrowLeft: false, ArrowRight:false};
+
+	startScreen.addEventListener('click', start);
+
+    
+    let player = {speed : 5, score:0};
+
+function keyDown (e) {
+    e.preventDefault();
+    keys[e.key]=true;
+
+	}
+
+	function keyUp(e) {
+		    keys[e.key]=false;
+    e.preventDefault();
+
+	}
+
+function movelines(){
+	let lin = document.querySelectorAll('.lines');
+	lin.forEach(function(item){
+		if(item.y >= 700){
+			item.y -= 750
+		}
+    item.y += player.speed;
+    item.style.top = item.y + "px";
+	})
+}
+
+
+function iscollide(a,b) {
+aRect = a.getBoundingClientRect();
+bRect = b.getBoundingClientRect();
+return !((aRect.bottom < bRect.top) ||(aRect.top>bRect.bottom) || (aRect.right<bRect.left) || (aRect.left>bRect.right) )
+
+}
+
+   function gamePlay () {
+levels();
+   	let road = gameArea.getBoundingClientRect();
+
+   	let car = document.querySelector('.car');
+   	if(player.start){
+
+
+   		if(keys.ArrowUp && player.y > road.top + 70){player.y -= player.speed}
+   			if(keys.ArrowDown && player.y < (road.bottom - 70) ){player.y += player.speed}
+   				if(keys.ArrowLeft && player.x > 0){player.x -= player.speed}
+   					if(keys.ArrowRight && player.x < (road.width - 50)){player.x += player.speed}
+
+   						car.style.top = player.y + "px";
+   					car.style.left = player.x + "px";
+
+   		movelines();
+   		moveEnemy(car);
+	   		window.requestAnimationFrame(gamePlay);
+
+	   		console.log(player.score++);
+player.score++;
+score.innerText = "score " + player.score;
+
+   	}
+   	
+   }
+
+
+
+    function start () {	
+
+    	// gameArea.classList.remove('hide');
+    	gameArea.innerHTML="";
+    	startScreen.classList.add('hide');
+    	player.start = true;
+    window.requestAnimationFrame(gamePlay);
+
+ let car = document.createElement('div');
+ car.setAttribute('class', 'car');
+
+ gameArea.appendChild(car);
+
+ player.x = car.offsetLeft;
+ player.y = car.offsetTop;
+
+
+ for (x=0; x<5; x++){
+let line = document.createElement("div");
+
+line.setAttribute("class", "lines");
+line.y = (x*150);
+line.style.top = line.y + "px";
+gameArea.appendChild(line);
+}
+
+for (x=0; x<3; x++){
+let enemycar = document.createElement("div");
+
+enemycar.setAttribute("class", "enemy");
+enemycar.y = ((x+1)*350)* -1;
+enemycar.style.top = enemycar.y + "px";
+enemycar.style.left = Math.floor((Math.random()*350)) + "px";
+gameArea.appendChild(enemycar);
+}
+
+	
+
+
+    }
+
+
+
+
+
+
+
+
+
+function endgame(){
+	player.start = false;
+	
+	startScreen.classList.remove('hide');
+	startScreen.innerHTML = "GameOver <br> Your Final Score Is " + (player.score + 2 ) + " <br>Click Here To Start Again <br> Speed Of Car remain Same For 700 points At WhichSpeed You Die"
+	player.score =-2;
+
+
+
+}
+
+
+
+
+
+
+function moveEnemy(car){
+	let enemy = document.querySelectorAll('.enemy');
+	enemy.forEach(function(item){
+		if(iscollide(car, item)){
+			console.log("booosom");
+			endgame();
+		}
+		if(item.y >= 700){
+			item.y = -300
+			item.style.left = Math.floor((Math.random()*350)) + "px";
+		}
+    item.y += player.speed;
+    item.style.top = item.y + "px";
+	})
+}
+
+
+
+function levels(){
+if(player.score >700 ){
+player.speed = 8;
+document.querySelector(".level").innerText= "level 2 ";
+}
+if(player.score >1400 ){
+player.speed = 10;
+document.querySelector(".level").innerText= "level 3 ";
+}
+if(player.score >2500){
+player.speed = 12;
+document.querySelector(".level").innerText= "level 4 ";
+}
+if(player.score >3500){
+player.speed = 15;
+document.querySelector(".level").innerText= "level 5  ";
+}
+if(player.score >4500){
+player.speed = 18;
+document.querySelector(".level").innerText= "level 6  ";
+}
+if(player.score >5000){
+player.speed = 20;
+document.querySelector(".level").innerText= "final  ";
+}
+if(player.score >6000){
+player.speed = 20;
+document.querySelector(".level").innerText= "Winner  ";
+}
+}
+</script>
+</body>
+</html>

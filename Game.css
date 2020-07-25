@@ -1,0 +1,104 @@
+*{
+	padding:0;
+	margin:0;
+}
+
+.hide{
+	display: none;
+}
+
+.car{
+	width:40px;
+	height: 60px;
+
+	position: absolute;
+	bottom:120px;
+	background-image:url("1.png");
+	background-size: 112%,115%; 
+	
+}
+
+.gamearea{
+	width:400px;
+	height:100vh;
+	background:#2d3436;
+	margin:auto;
+	position: absolute;
+	top:0;
+	left:35%;
+justify-content: center;
+border-left:5px dashed white;
+border-right:5px dashed white;
+
+
+}
+.lines{
+	width:10px;
+	height:100px;
+	background-color: #fff;
+	position: absolute;
+	margin-left:195px;
+
+
+
+
+}
+
+
+.car{
+	z-index: 1;
+}
+
+.enemy{
+width:40px;
+	height: 60px;
+
+	background:url("1.png");
+
+	background-size:112%,115%;
+	background-repeat: no-repeat;
+	transform: translateX(180);
+	position: absolute;
+	bottom:120px;
+	display: block;
+
+
+}
+
+.score{
+	background-color: green;
+	width:300px;
+	height:50px;
+	text-align: center;
+	margin:10px;
+	color:white;
+	font-size: 26px;
+}
+.start{
+	position: absolute;
+	top:50%;
+	left:35%;
+	text-transform: translate(50% 50%);
+	background-color: red;
+	padding: 20px;
+	color:white;
+	z-index: 10;
+
+}
+
+
+body{
+background: url('background-city.jpg');
+    background-repeat: no-repeat;
+    background-size: 100% 250%;
+     
+
+}
+
+.level{
+	z-index: 1000;
+	font-size: 36px;
+	color:white;
+	margin-top:200px;
+	margin-left:40px;
+}
